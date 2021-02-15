@@ -3,17 +3,6 @@ const random = (min, max) => {
 };
 
 
-let str = prompt("Введите строоку " , "");
-let maxLength = +prompt("Введите максимальную длинну " , "")
-if(str == undefined || str == ""){
-    alert("Строка не введена");
-}else{
-    truncate();
-}
-function truncate(str, maxLength) {
-    if (str.length >= maxLength) {
-        return alert(str.slice(0 , maxLength-1) + "...");
-    }else{
-        return alert(false);
-    }
-}
+let checkLength = (str, maxLength) => {
+  return str.length < maxLength;
+};
