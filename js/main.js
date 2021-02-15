@@ -3,6 +3,6 @@ const random = (min, max) => {
 };
 
 
-let checkLength = (str, maxLength) => {
+const checkLength = (str, maxLength) => {
   return str.length < maxLength;
 };
