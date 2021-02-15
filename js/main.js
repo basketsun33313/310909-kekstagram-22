@@ -4,15 +4,15 @@ const random = (min, max) => {
 
 
 let str = prompt("Введите строоку " , "");
-let maxlegth = +prompt("Введите максимальную длинну " , "")
+let maxLength = +prompt("Введите максимальную длинну " , "")
 if(str == undefined || str == ""){
     alert("Строка не введена");
 }else{
     truncate();
 }
-function truncate() {
-    if (str.length >= maxlegth) {
-        return alert(str.slice(0 , maxlegth-1) + "...");
+function truncate(str, maxLength) {
+    if (str.length >= maxLength) {
+        return alert(str.slice(0 , maxLength-1) + "...");
     }else{
         return alert(false);
     }
