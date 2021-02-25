@@ -23,18 +23,16 @@ const checkLength = (str, maxLength) => {
 
 const generatePictures = (count) => {
   const pictures = [];
-
-  for (let i = 0; i < count; i++) {
-    pictures.push({
+    for (let i = 0; i < count; i++) {
+      pictures.push({
         id : i + 1,
         url : 'photos/' + (i + 1) + '.jpg',
         description : 'Описание',
         likes: random(MIN_LIKES, MAX_LIKES),
         comments: generateComments(random(0, MAX_COMMENTS))
-    });
-  }
-
-  return pictures;
+      });
+    }
+    return pictures;
 };
 
 const generateComments = (count) => {
@@ -50,14 +48,13 @@ const generateComments = (count) => {
   }
 
   return comments;
-}
+};
 
 const swap = (items, i, j) => {
   const temp = items[i];
   items[i] = items[j];
   items[j] = temp;
-}
-
+};
 
 const getRandomItems = (items, count) => {
   for (let i = 0; i < count; i++) {
@@ -66,7 +63,7 @@ const getRandomItems = (items, count) => {
   }
 
   return items.slice(0, count);
-}
+};
 
 const pictures = generatePictures(PICTURE_COUNT);
 
