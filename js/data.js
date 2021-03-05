@@ -1,5 +1,5 @@
 import {random} from './util.js';
-
+import {getRandomItems} from './util.js';
 const PICTURE_COUNT = 25;
 const MAX_COMMENTS = 10;
 const MIN_LIKES = 15;
