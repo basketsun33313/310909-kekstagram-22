@@ -1,6 +1,6 @@
 const templateFragment = document.querySelector('#picture').content;
 const picturesContainer = document.querySelector('.pictures');
-const randorPicture = (pictures) => {
+const renderPicture = (pictures) => {
   const fragment = document.createDocumentFragment();
   for (let i = 0; i < pictures.length; i++) {
     let pictureElement = templateFragment.cloneNode(true);
@@ -12,6 +12,6 @@ const randorPicture = (pictures) => {
   picturesContainer.appendChild(fragment);
 };
 
-export{randorPicture};
+export{renderPicture};
 
 
