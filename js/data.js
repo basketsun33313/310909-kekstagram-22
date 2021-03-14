@@ -46,5 +46,6 @@ const generateComments = (count) => {
 };
 
 const pictures = generatePictures(PICTURE_COUNT);
+const comments = generateComments(MAX_COMMENTS);
 
-export {generatePictures, generateComments, pictures};
+export {generatePictures, generateComments, pictures, comments};
