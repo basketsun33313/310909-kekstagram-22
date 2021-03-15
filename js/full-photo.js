@@ -4,6 +4,7 @@ let pictureLikes = pictureElement.querySelector('.likes-count');
 let pictureCountComments = pictureElement.querySelector('.comments-count');
 let pictureDesctiption = pictureElement.querySelector('.social__caption');
 let pictureBoxComments = pictureElement.querySelector('.social__comments');
+let tamplateFragment = pictureElement.querySelector('.social__comment').content;
 let buttonClose = pictureElement.querySelector('.big-picture__cancel');
 let counterCommentBox = pictureElement.querySelector('.social__comment-count');
 let commentLoader = document.querySelector('.comments-loader');
@@ -26,11 +27,13 @@ buttonClose.addEventListener('click', function () {
 });
 
 const renderComments = (comments) => {
+  const fragment = document.createDocumentFragment();
   for (let i = 0; i < comments.length; i++) {
-    const commentElement = document.createElement('li');
+    const commentElement = tamplateFragment.cloneNode(true);
     commentElement.classList.add('social__comment');
+    fragment.appendChild(commentElement);
   }
-  pictureBoxComments.appendChild(commentElement);
+  pictureBoxComments.appendChild(fragment);
 }
 
 export{show, renderComments};
