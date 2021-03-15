@@ -27,7 +27,7 @@ buttonClose.addEventListener('click', function () {
 
 const renderComments = (comments) => {
   for (let i = 0; i < comments.length; i++) {
-    let commentElement = document.createElement('li');
+    const commentElement = document.createElement('li');
     commentElement.classList.add('social__comment');
   }
   pictureBoxComments.appendChild(commentElement);
