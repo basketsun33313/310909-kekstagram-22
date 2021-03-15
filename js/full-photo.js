@@ -1,11 +1,11 @@
-import { comments } from "./data";
-let picturePhoto = document.querySelector('.big-picture__img > img');
-let pictureLikes = document.querySelector('.likes-count');
-let pictureCountComments = document.querySelector('.comments-count');
-let pictureDesctiption = document.querySelector('.social__caption');
-let pictureBoxComments = document.querySelector('.social__comments');
-let buttonClose = document.querySelector('.big-picture__cancel');
-let counterCommentBox = document.querySelector('.social__comment-count');
+let pictureElement = document.querySelector('.big-picture');
+let picturePhoto = pictureElement.querySelector('.big-picture__img > img');
+let pictureLikes = pictureElement.querySelector('.likes-count');
+let pictureCountComments = pictureElement.querySelector('.comments-count');
+let pictureDesctiption = pictureElement.querySelector('.social__caption');
+let pictureBoxComments = pictureElement.querySelector('.social__comments');
+let buttonClose = pictureElement.querySelector('.big-picture__cancel');
+let counterCommentBox = pictureElement.querySelector('.social__comment-count');
 let commentLoader = document.querySelector('.comments-loader');
 let bodyBackground = document.querySelector('body');
 
@@ -13,9 +13,9 @@ const show = (picture) => {
   const pictureElement = document.querySelector('.big-picture');
   pictureElement.classList.remove('hidden');
   picturePhoto.src = picture.url;
-  pictureLikes = picture.textContent;
-  pictureCountComments = picture.textContent;
-  pictureDesctiption = picture.textContent = 'Описание фотографии';
+  pictureLikes.textContent = pictureElement.querySelector('.likes-count');
+  pictureCountComments.textContent = pictureElement.querySelector('.comments-count');
+  pictureDesctiption.textContent = pictureElement.querySelector('.social__caption');
   counterCommentBox.classList.add('hidden');
   commentLoader.classList.add('hidden');
   bodyBackground.classList.add('modal-open');

@@ -48,4 +48,4 @@ const generateComments = (count) => {
 const pictures = generatePictures(PICTURE_COUNT);
 const comments = generateComments(MAX_COMMENTS);
 
-export {generatePictures, generateComments, pictures, comments};
+export {generatePictures, generateComments, pictures};
