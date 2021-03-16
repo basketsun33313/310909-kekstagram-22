@@ -4,7 +4,6 @@ let pictureLikes = pictureElement.querySelector('.likes-count');
 let pictureCountComments = pictureElement.querySelector('.comments-count');
 let pictureDesctiption = pictureElement.querySelector('.social__caption');
 let pictureBoxComments = pictureElement.querySelector('.social__comments');
-let tamplateFragment = pictureElement.querySelector('.social__comment');
 let buttonClose = pictureElement.querySelector('.big-picture__cancel');
 let counterCommentBox = pictureElement.querySelector('.social__comment-count');
 let commentLoader = document.querySelector('.comments-loader');
