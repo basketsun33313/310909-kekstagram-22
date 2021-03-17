@@ -46,4 +46,11 @@ buttonClose.addEventListener('click', function () {
   pictureElement.classList.add('hidden');
 });
 
-export{show, renderComments};
+document.addEventListener('keydown', function (evt) {
+  if (evt.key === ('Escape' || 'Esc')) {
+    evt.preventDefault();
+    pictureElement.classList.add('hidden');
+  }
+});
+
+export{show};
