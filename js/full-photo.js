@@ -1,3 +1,4 @@
+import {isEscEvent, isEnterEvent} from './util.js';
 let pictureElement = document.querySelector('.big-picture');
 let picturePhoto = pictureElement.querySelector('.big-picture__img > img');
 let pictureLikes = pictureElement.querySelector('.likes-count');
@@ -42,14 +43,31 @@ const show = (picture) => {
   document.body.classList.add('modal-open');
 };
 
-buttonClose.addEventListener('click', function () {
-  pictureElement.classList.add('hidden');
-});
-
 document.addEventListener('keydown', function (evt) {
-  if (evt.key === ('Escape' || 'Esc')) {
+  if (isEscEvent(evt)) {
     evt.preventDefault();
     pictureElement.classList.add('hidden');
+  }
+});
+
+const closeBigPicture = () => {
+  pictureElement.classList.add('hidden');
+
+  document.removeEventListener('keydown', (evt) => {
+    if (isEscEvent(evt)) {
+      evt.preventDefault();
+      pictureElement.classList.add('hidden');
+    }
+  });
+};
+
+buttonClose.addEventListener('click',  () => {
+  closeBigPicture();
+});
+
+buttonClose.addEventListener('keydown', (evt) => {
+  if (isEnterEvent(evt)) {
+    closeBigPicture();
   }
 });
 
