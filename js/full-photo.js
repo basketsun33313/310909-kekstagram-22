@@ -30,6 +30,20 @@ const renderComments = (comments) => {
   pictureBoxComments.appendChild(fragment);
 };
 
+function onEscPress(evt) {
+  // смотри. В пред. варианте если сюда добавить console.log то он будет отрабатывать несколько раз ( сколько было открыто превью до этого )
+  console.log('сработал обработчик на esc');
+  if (isEscEvent(evt)) {
+    closeBigPicture();
+  }
+};
+
+// это вынесли потому что убирать класс и обработчик необходимо как и на закрытие по esc так и по клику, так и по enter
+function closeBigPicture () {
+  pictureElement.classList.add('hidden');
+  document.removeEventListener('keydown', onEscPress); // <-- onEscPress
+};
+
 const show = (picture) => {
   const pictureElement = document.querySelector('.big-picture');
   pictureElement.classList.remove('hidden');
@@ -41,24 +55,9 @@ const show = (picture) => {
   counterCommentBox.classList.add('hidden');
   commentLoader.classList.add('hidden');
   document.body.classList.add('modal-open');
-};
-
-document.addEventListener('keydown', function (evt) {
-  if (isEscEvent(evt)) {
-    evt.preventDefault();
-    pictureElement.classList.add('hidden');
-  }
-});
-
-const closeBigPicture = () => {
-  pictureElement.classList.add('hidden');
-
-  document.removeEventListener('keydown', (evt) => {
-    if (isEscEvent(evt)) {
-      evt.preventDefault();
-      pictureElement.classList.add('hidden');
-    }
-  });
+  // обработчик который добавляем и тот который удалем должен ссылаться на одну и ту же функцмю, иначе удаления не произойдет
+  // то есть при отобрадении добавляем обработчик, а при закрытии удаляем, как бы превью не закрывалось.
+  document.addEventListener('keydown', onEscPress); // <-- onEscPress
 };
 
 buttonClose.addEventListener('click',  () => {
