@@ -35,7 +35,7 @@ function onEscPress(evt) {
   if (isEscEvent(evt)) {
     closeBigPicture();
   }
-};
+}
 
 // это вынесли потому что убирать класс и обработчик необходимо как и на закрытие по esc так и по клику, так и по enter
 function closeBigPicture () {
