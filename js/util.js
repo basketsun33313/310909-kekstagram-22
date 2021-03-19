@@ -17,4 +17,12 @@ const getRandomItems = (items, count) => {
   return items.slice(0, count);
 };
 
-export {random, swap, getRandomItems};
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
+
+const isEnterEvent = (evt) => {
+  return evt.key === 'Enter';
+};
+
+export {random, swap, getRandomItems, isEscEvent, isEnterEvent};
