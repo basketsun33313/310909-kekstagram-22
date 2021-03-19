@@ -32,7 +32,6 @@ const renderComments = (comments) => {
 
 function onEscPress(evt) {
   // смотри. В пред. варианте если сюда добавить console.log то он будет отрабатывать несколько раз ( сколько было открыто превью до этого )
-  console.log('сработал обработчик на esc');
   if (isEscEvent(evt)) {
     closeBigPicture();
   }
