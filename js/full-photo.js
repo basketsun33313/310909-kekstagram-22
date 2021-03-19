@@ -41,7 +41,7 @@ function onEscPress(evt) {
 function closeBigPicture () {
   pictureElement.classList.add('hidden');
   document.removeEventListener('keydown', onEscPress); // <-- onEscPress
-};
+}
 
 const show = (picture) => {
   const pictureElement = document.querySelector('.big-picture');
