@@ -1,4 +1,4 @@
-import {isEscEvent, isEnterEvent} from './util.js';
+import { isEscEvent, isEnterEvent } from './util.js';
 let pictureElement = document.querySelector('.big-picture');
 let picturePhoto = pictureElement.querySelector('.big-picture__img > img');
 let pictureLikes = pictureElement.querySelector('.likes-count');
@@ -8,6 +8,15 @@ let pictureBoxComments = pictureElement.querySelector('.social__comments');
 let buttonClose = pictureElement.querySelector('.big-picture__cancel');
 let counterCommentBox = pictureElement.querySelector('.social__comment-count');
 let commentLoader = document.querySelector('.comments-loader');
+const downloadElement = document.querySelector('#upload-file');
+const editForm = document.querySelector('.img-upload__overlay');
+const buttonCancelForm = document.querySelector('#upload-cancel');
+const scalePlus = document.querySelector('.scale__control--bigger');
+const scaleMinus = document.querySelector('.scale__control--smaller');
+const scaleValue = document.querySelector('.scale__control--value');
+const bigImage = document.querySelector('.img-upload__preview img');
+const ScaleControl = document.querySelector('.scale__control--value');
+
 
 const renderComments = (comments) => {
   const fragment = document.createDocumentFragment();
@@ -38,7 +47,7 @@ function onEscPress(evt) {
 }
 
 // это вынесли потому что убирать класс и обработчик необходимо как и на закрытие по esc так и по клику, так и по enter
-function closeBigPicture () {
+function closeBigPicture() {
   pictureElement.classList.add('hidden');
   document.removeEventListener('keydown', onEscPress); // <-- onEscPress
 }
@@ -59,7 +68,7 @@ const show = (picture) => {
   document.addEventListener('keydown', onEscPress); // <-- onEscPress
 };
 
-buttonClose.addEventListener('click',  () => {
+buttonClose.addEventListener('click', () => {
   closeBigPicture();
 });
 
@@ -69,4 +78,152 @@ buttonClose.addEventListener('keydown', (evt) => {
   }
 });
 
-export{show};
+//функция для загрузки нового изображения и показа формы
+downloadElement.addEventListener('input', function () {
+  editForm.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  scalePlus.addEventListener('click', zoomIn);
+  scaleMinus.addEventListener('click', zoomOut);
+
+});
+// выбор эффекта
+let radioButtons = document.querySelectorAll('.effects__radio');
+for (let i = 0; i < radioButtons.length; i++) {
+  console.log(radioButtons[i]);
+  radioButtons[i].addEventListener('change', function () {
+    console.log('Выбор эффекта --- ' + this.value);
+    bigImage.className = "";
+    bigImage.style.filter = "";
+    bigImage.classList.add('effects__preview--' + this.value);
+    switch (this.value) {
+      case 'none':
+        bigImage.style.filter = '';
+        sliderElement.noUiSlider.set([0]);
+        sliderElement.style.display = `none`;
+        break;
+
+      case 'chrome':
+        bigImage.style.filter = `grayscale(0)`;
+        sliderElement.noUiSlider.set([0]);
+        sliderElement.style.display = `block`;
+        break;
+
+      case 'sepia':
+        bigImage.style.filter = `sepia(0)`;
+        sliderElement.noUiSlider.set([0]);
+        sliderElement.style.display = `block`;
+        break;
+
+      case 'marvin':
+        bigImage.style.filter = `invert(0%)`;
+        sliderElement.noUiSlider.set([0]);
+        sliderElement.style.display = `block`;
+        break;
+
+      case 'phobos':
+        bigImage.style.filter = `blur(0px)`;
+        sliderElement.noUiSlider.set([0]);
+        sliderElement.style.display = `block`;
+        break;
+
+      case 'heat':
+        bigImage.style.filter = `brightness(0)`;
+        sliderElement.noUiSlider.set([0]);
+        sliderElement.style.display = `block`;
+        break;
+
+      default:
+        break;
+    }
+  });
+}
+
+//функция закрытия окна формы
+buttonCancelForm.addEventListener('click', function () {
+  editForm.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  bigImage.style.transform = `scale(1)`;
+  ScaleControl.value = '100%';
+  scalePlus.removeEventListener('click', zoomIn);
+  scaleMinus.removeEventListener('click', zoomOut);
+});
+
+let zoom = 1;
+ScaleControl.value = '100%';
+
+const zoomIn = () => {
+  zoom += 0.25;
+  if (zoom > 1) {
+    zoom = 1;
+  }
+  ScaleControl.value = `${zoom * 100}%`;
+  bigImage.style.transform = `scale(${zoom})`;
+}
+
+const zoomOut = () => {
+  zoom -= 0.25;
+  if (zoom < 0.25) {
+    zoom = 0.25;
+  }
+  ScaleControl.value = `${zoom * 100}%`;
+  bigImage.style.transform = `scale(${zoom})`;
+}
+// создание слайдера и эффектов на изображение
+const sliderElement = document.querySelector('.effect-level__slider');
+
+noUiSlider.create(sliderElement, {
+  range: {
+    min: 0,
+    max: 100,
+  },
+  start: 0,
+  step: 1,
+  connect: 'lower',
+});
+
+let effectLevel = document.querySelector('.effect-level__value');
+console.log(effectLevel);
+
+sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {
+  console.log(unencoded[handle]);
+  effectLevel.value = unencoded[handle];
+  console.log(effectLevel.value);
+  let effectLevelValue = effectLevel.value;
+  console.log("Текущий, включенный сейчай эффект --- " + document.querySelector('input[name="effect"]:checked').value);
+  let currentEffect = document.querySelector('input[name="effect"]:checked').value;
+  switch (currentEffect) {
+    case 'none':
+      bigImage.style.filter = '';
+      break;
+
+    case 'chrome':
+      let effectLevelChrome = effectLevelValue / 100;
+      bigImage.style.filter = `grayscale(${effectLevelChrome.toFixed(1)})`;
+      break;
+
+    case 'sepia':
+      let effectLevelSepia = effectLevelValue / 100;
+      bigImage.style.filter = `sepia(${effectLevelSepia.toFixed(1)})`;
+      break;
+
+    case 'marvin':
+      let effectLevelMarvin = effectLevelValue;
+      bigImage.style.filter = `invert(${effectLevelMarvin}%)`;
+      break;
+
+    case 'phobos':
+      let effectLevelPhobos = effectLevelValue * 0.03;
+      bigImage.style.filter = `blur(${effectLevelPhobos}px)`;
+      break;
+
+    case 'heat':
+      let effectLevelHeat = effectLevelValue * 0.03;
+      bigImage.style.filter = `brightness(${effectLevelHeat})`;
+      break;
+
+    default:
+      break;
+  }
+});
+
+export { show };
