@@ -82,6 +82,10 @@ buttonClose.addEventListener('keydown', (evt) => {
 downloadElement.addEventListener('input', function () {
   editForm.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  ScaleControl.value = '100%';
+  bigImage.style.filter = "";
+  bigImage.className = "";
+  sliderElement.noUiSlider.set([0]);
   scalePlus.addEventListener('click', zoomIn);
   scaleMinus.addEventListener('click', zoomOut);
 
@@ -146,6 +150,8 @@ buttonCancelForm.addEventListener('click', function () {
   ScaleControl.value = '100%';
   scalePlus.removeEventListener('click', zoomIn);
   scaleMinus.removeEventListener('click', zoomOut);
+  hashtagInput.value = '';
+  commentInput.value = '';
 });
 
 let zoom = 1;
@@ -224,6 +230,60 @@ sliderElement.noUiSlider.on('update', (_, handle, unencoded) => {
     default:
       break;
   }
+});
+
+/// Валидация хеш_тегов и комментариев
+const hashtagInput = document.querySelector('.text__hashtags');
+const commentInput = document.querySelector('.text__description');
+const MAX_CHARACTERS = 20;
+const MAX_TAGS = 5;
+
+const showTagError = function (hashTags) {
+  for (var i = 0; i < hashTags.length; i++) {
+    if (hashTags[i].indexOf('#') !== 0) {
+      return 'Начните ваш хэштег с символа "#"';
+    } else if (hashTags[i].length === 1) {
+      return 'Ваш хэштег не может состоять только из одной решетки';
+    } else if (hashTags[i].length > MAX_CHARACTERS) {
+      return 'Ваш хэштег превышает максимальную длинну на ' + (hashTags[i].length - MAX_CHARACTERS) + ' символов';
+    } else if (hashTags.length > MAX_TAGS) {
+      return 'Нельзя указывать больше пяти хэштегов';
+    } else if (hashTags[i].indexOf('#', 1) > 0) {
+      return 'Хэштеги должны разделяться пробелом';
+    } else if (hashTags.indexOf(hashTags[i], i + 1) > 0) {
+      return 'Хэштеги не должны повторяться';
+    }
+  }
+  return '';
+};
+
+const setTagValidity = function () {
+  let tagsArray = hashtagInput.value.toLowerCase().split(/[\s]+/).filter(function (word) {
+    return word.length > 0;
+  });
+
+  hashtagInput.setCustomValidity(showTagError(tagsArray));
+  hashtagInput.style.border = showTagError(tagsArray) ? '2px solid red' : '';
+};
+
+hashtagInput.addEventListener('input', function () {
+  setTagValidity();
+});
+
+hashtagInput.addEventListener('focus', function () {
+  document.removeEventListener('keydown', onEscPress);
+});
+
+hashtagInput.addEventListener('blur', function () {
+  document.addEventListener('keydown', onEscPress);
+});
+
+commentInput.addEventListener('focus', function () {
+  document.removeEventListener('keydown', onEscPress);
+});
+
+commentInput.addEventListener('blur', function () {
+  document.addEventListener('keydown', onEscPress);
 });
 
 export { show };
