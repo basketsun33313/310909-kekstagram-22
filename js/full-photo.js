@@ -1,4 +1,5 @@
 import { isEscEvent, isEnterEvent } from './util.js';
+import {toSend} from './server.js';
 let pictureElement = document.querySelector('.big-picture');
 let picturePhoto = pictureElement.querySelector('.big-picture__img > img');
 let pictureLikes = pictureElement.querySelector('.likes-count');
@@ -16,7 +17,7 @@ const scaleMinus = document.querySelector('.scale__control--smaller');
 const scaleValue = document.querySelector('.scale__control--value');
 const bigImage = document.querySelector('.img-upload__preview img');
 const ScaleControl = document.querySelector('.scale__control--value');
-
+const imgUpload = document.querySelector('.img-upload__form');
 
 const renderComments = (comments) => {
   const fragment = document.createDocumentFragment();
@@ -88,7 +89,17 @@ downloadElement.addEventListener('input', function () {
   sliderElement.noUiSlider.set([0]);
   scalePlus.addEventListener('click', zoomIn);
   scaleMinus.addEventListener('click', zoomOut);
-
+  const post = {
+    id: 1,
+    userId: 31337,
+    title: 'Обзор метода fetch',
+    body: 'Содержимое обзора',
+  }
+  imgUpload.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    toSend(post);
+    console.log(post);
+  });
 });
 // выбор эффекта
 let radioButtons = document.querySelectorAll('.effects__radio');
@@ -143,7 +154,7 @@ for (let i = 0; i < radioButtons.length; i++) {
 }
 
 //функция закрытия окна формы
-buttonCancelForm.addEventListener('click', function () {
+let closeForm = () => {
   editForm.classList.add('hidden');
   document.body.classList.remove('modal-open');
   bigImage.style.transform = `scale(1)`;
@@ -152,7 +163,9 @@ buttonCancelForm.addEventListener('click', function () {
   scaleMinus.removeEventListener('click', zoomOut);
   hashtagInput.value = '';
   commentInput.value = '';
-});
+}
+
+buttonCancelForm.addEventListener('click', closeForm);
 
 let zoom = 1;
 ScaleControl.value = '100%';
@@ -286,4 +299,4 @@ commentInput.addEventListener('blur', function () {
   document.addEventListener('keydown', onEscPress);
 });
 
-export { show };
+export {show, closeForm};

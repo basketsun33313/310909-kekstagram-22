@@ -15,21 +15,6 @@ const SENTENSES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const generatePictures = (count) => {
-  const pictures = [];
-  for (let i = 0; i < count; i++) {
-    pictures.push({
-      id : i + 1,
-      url : 'photos/' + (i + 1) + '.jpg',
-      description : 'Описание',
-      likes: random(MIN_LIKES, MAX_LIKES),
-      comments: generateComments(random(0, MAX_COMMENTS)),
-    });
-  }
-
-  return pictures;
-};
-
 const generateComments = (count) => {
   const comments = [];
 
@@ -45,6 +30,4 @@ const generateComments = (count) => {
   return comments;
 };
 
-const pictures = generatePictures(PICTURE_COUNT);
-
-export {generatePictures, generateComments, pictures};
+export {generateComments};
