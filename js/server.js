@@ -25,6 +25,18 @@ let toSend = (post) => {
     closeForm();
     let templateSuccess = document.querySelector('#success').content;
     document.body.appendChild(templateSuccess);
+    let successContainer = document.querySelector('.success');
+    let buttonSuccessClose = document.querySelector('.success__button');
+    if (buttonSuccessClose) {
+        buttonSuccessClose.addEventListener('click', () => {
+        successContainer.classList.add('hidden');
+      });
+        document.body.addEventListener('keydown', (evt) => {
+        if (evt.key === 'Escape' || evt.key === 'Esc') {
+          successContainer.classList.add('hidden');
+        }
+      });
+    }
     console.log('Успех отправки');
   })
   .catch(() => {
