@@ -90,14 +90,12 @@ downloadElement.addEventListener('input', function () {
   scalePlus.addEventListener('click', zoomIn);
   scaleMinus.addEventListener('click', zoomOut);
   const post = {
-    id: 1,
-    userId: 31337,
-    title: 'Обзор метода fetch',
-    body: 'Содержимое обзора',
+    body: formData,
   }
   imgUpload.addEventListener('submit', (evt) => {
+    const formData = new FormData(evt.target);
     evt.preventDefault();
-    toSend(post);
+    toSend(formData);
     console.log(post);
   });
 });
