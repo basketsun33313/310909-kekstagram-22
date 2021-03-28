@@ -10,6 +10,12 @@ let getData = (cb) => {
 }).catch(error => {
   let templateFragment = document.querySelector('#error').content;
   document.body.appendChild(templateFragment);
+  let buttonErrorCloce = document.querySelector('.error__button');
+  if (buttonErrorCloce) {
+    buttonErrorCloce.addEventListener('click', function() {
+      document.querySelector('.error').remove();
+    });
+  }
 })
 }
 
@@ -24,22 +30,26 @@ let toSend = (post) => {
   .then(() => {
     closeForm();
     let templateSuccess = document.querySelector('#success').content;
-    document.body.appendChild(templateSuccess);
     let successContainer = document.querySelector('.success');
     let buttonSuccessClose = document.querySelector('.success__button');
+    let fragment = document.createDocumentFragment();
+    let fragmentElement = templateSuccess.cloneNode(true);
+    fragment.appendChild(fragmentElement);
+    document.body.appendChild(fragment);
     if (buttonSuccessClose) {
         buttonSuccessClose.addEventListener('click', () => {
-        successContainer.classList.add('hidden');
+        successContainer.remove();
       });
         document.body.addEventListener('keydown', (evt) => {
         if (evt.key === 'Escape' || evt.key === 'Esc') {
-          successContainer.classList.add('hidden');
+          successContainer.remove();
         }
       });
     }
     console.log('Успех отправки');
   })
   .catch(() => {
+    document.body.appendChild(templateFragment);
     console.log('Ошибка отправки');
   })
 }
